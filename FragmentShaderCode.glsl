@@ -8,31 +8,22 @@ uniform sampler2D myTextureSampler0;
 
 // Special Light
 uniform vec4 ambientLight;
-uniform vec3 lightPositionWorld;
-uniform vec3 eyePositionWorld;
-
-//Directional Light
-uniform vec4 ambientLight0;
-uniform vec3 lightPositionWorld0;
-uniform vec3 eyePositionWorld0;
-
-out vec4 color;
 
 struct SpecialLight{
-
 	vec3 lightPosition;
 	vec3 eyePosition;
 };
 uniform SpecialLight specialLight;
 
-struct MultiLight
-{
-	
-    vec3 position;
-    vec3 color;
+//Directional Light
+struct DirectionalLight{
+	vec4 ambient;
+	vec3 lightPosition;
+	vec3 eyePosition;
 };
-#define LIGHT_NUM 12
-uniform MultiLight littleLight[LIGHT_NUM];
+uniform DirectionalLight directionalLight;
+
+out vec4 color;
 
 void main()
 {
@@ -55,13 +46,13 @@ void main()
 
 	//dir light
 	//Diffuse
-	vec3 lightVectorWorld0 = normalize(lightPositionWorld0 - vertexPositionWorld);
+	vec3 lightVectorWorld0 = normalize(directionalLight.lightPosition - vertexPositionWorld);
 	float brightness0 = dot(lightVectorWorld0, normalize(normalWorld));
 	vec4 diffuseLight0 = vec4(brightness0, brightness0, brightness0, 1.0);
 
 	//Specular
 	vec3 reflectedLightVectorWorld0 = reflect(-lightVectorWorld0, normalWorld);
-	vec3 eyeVectorWorld0 = normalize(eyePositionWorld0 - vertexPositionWorld);
+	vec3 eyeVectorWorld0 = normalize(directionalLight.eyePosition - vertexPositionWorld);
 	float s1 =clamp(dot(reflectedLightVectorWorld0, eyeVectorWorld0), 0, 1);
 	s1 = pow(s1, 50);
 	vec4 specularLight0 = vec4(s1 , s1, s1, 1);
@@ -85,7 +76,7 @@ void main()
 		MaterialDiffuseColor * clamp(diffuseLight, 0, 1) * 1.5f+
 		specularLight +
 		MaterialAmbientColor * 0.2f +
-		MaterialAmbientColor * ambientLight0 + 
+		MaterialAmbientColor * directionalLight.ambient + 
 		MaterialDiffuseColor * clamp(diffuseLight0, 0, 1) * 0.5f+
 		specularLight0 * MaterialAmbientColor *0.5f;
 }

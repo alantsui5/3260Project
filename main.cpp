@@ -545,13 +545,13 @@ void matrix(string obj) {
 	
 	//direactional light
 	glm::vec4 ambientLight0(0.1f * lightbrightness, 0.1f * lightbrightness, 0.1f * lightbrightness, 1.0f);
-	myShader.setVec4("ambientLight0", ambientLight0);
+	myShader.setVec4("directionalLight.ambient", ambientLight0);
 
 	glm::vec3 lightPosition0 = glm::vec3(dolphinPosX, 5.0f, dolphinPosY);
-	myShader.setVec3("lightPositionWorld0", lightPosition0);
+	myShader.setVec3("directionalLight.lightPosition", lightPosition0);
 
 	glm::vec3 eyePosition0(camX, camY, camZ);
-	myShader.setVec3("eyePositionWorld0", eyePosition0);
+	myShader.setVec3("directionalLight.eyePosition", eyePosition0);
 
 }
 void paintGL(void)

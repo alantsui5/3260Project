@@ -19,13 +19,15 @@ uniform vec3 eyePositionWorld0;
 out vec4 color;
 
 struct SpecialLight{
-	vec3 lightPositionWorld;
-	vec3 eyePositionWorld;
+
+	vec3 lightPosition;
+	vec3 eyePosition;
 };
 uniform SpecialLight specialLight;
 
 struct MultiLight
 {
+	
     vec3 position;
     vec3 color;
 };
@@ -40,13 +42,13 @@ void main()
 	vec4 MaterialDiffuseColor = texture( myTextureSampler0, UV ).rgba;
 
 	//Diffuse
-	vec3 lightVectorWorld = normalize(lightPositionWorld - vertexPositionWorld);
+	vec3 lightVectorWorld = normalize(specialLight.lightPosition - vertexPositionWorld);
 	float brightness = dot(lightVectorWorld, normalize(normalWorld));
 	vec4 diffuseLight = vec4(brightness, brightness, brightness, 1.0);
 
 	//Specular
 	vec3 reflectedLightVectorWorld = reflect(-lightVectorWorld, normalWorld);
-	vec3 eyeVectorWorld = normalize(eyePositionWorld - vertexPositionWorld);
+	vec3 eyeVectorWorld = normalize(specialLight.eyePosition - vertexPositionWorld);
 	float s =clamp(dot(reflectedLightVectorWorld, eyeVectorWorld), 0, 1);
 	s = pow(s, 50);
 	vec4 specularLight = vec4(s , s, s, 1);
@@ -85,5 +87,5 @@ void main()
 		MaterialAmbientColor * 0.2f +
 		MaterialAmbientColor * ambientLight0 + 
 		MaterialDiffuseColor * clamp(diffuseLight0, 0, 1) * 0.5f+
-		specularLight0 * MaterialAmbientColor *0.5f + multi_result;
+		specularLight0 * MaterialAmbientColor *0.5f;
 }

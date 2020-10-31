@@ -165,18 +165,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	}
 	if (key == GLFW_KEY_C && action == GLFW_PRESS)
 	{
-		if (event == 0) {
-			event = 1;
-			lightbrightness = -10;
-			for (int i = 0; i < no; i++) {
-				lp[i].position = glm::vec3(penguinPosX, 0.0f, penguinPosY);
-			}
-		}
+		lightbrightness = -10;
 	}
 	if (key == GLFW_KEY_V && action == GLFW_PRESS)
 	{
-		event = 0;
-		event2 = 0;
 		lightbrightness = 3;
 	}
 	if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
@@ -517,7 +509,7 @@ void matrix(string obj) {
 	else if (obj == "penguin") {
 		modelTransformMatrix = glm::translate(glm::mat4(), glm::vec3(penguinPosX, -1.0f, penguinPosY));
 		modelScalingMatrix = glm::scale(glm::mat4(), glm::vec3(3.05f, 3.05f, 3.05f));
-		if(penguinSwim == 1)
+		if (penguinSwim == 1)
 			modelRotationMatrix = glm::rotate(glm::mat4(), -14.0f, glm::vec3(1, 0, 0));
 		modelRotationMatrix *= glm::rotate(glm::mat4(), penguinRotate * penguinDelta, glm::vec3(0, 0, 1));
 	}

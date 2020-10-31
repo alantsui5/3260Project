@@ -13,16 +13,15 @@
 #include <map>
 #include <time.h>
 
-#define no 12
 using namespace std;
 clock_t now_t;
 int st_time = 0;
+
+
+// Shader and light brightness
 const int SCR_WIDTH = 800;
 const int SCR_HEIGHT = 600;
 Shader myShader;
-// Could define the Vao&Vbo and interaction parameter here
-
-
 int isRotate = 1;
 int lightbrightness = 3;
 
@@ -37,8 +36,6 @@ float yaw = -90.0f;
 float pitch = 17.0f;
 double oldX;
 double oldY;
-int event = 0;
-int event2 = 0;
 
 // Dolphin and Sea Properties
 int dolphinColor = 0;
@@ -57,40 +54,6 @@ float penguinDelta = 0.1f;
 float penguinSwim = 0;
 
 glm::vec3 lightPosition = glm::vec3(8, 3, 0);
-
-struct MultiLight
-{
-	glm::vec3 position;
-	glm::vec3 color;
-	glm::vec3 formula;
-};
-MultiLight lp[no];
-
-float random(int max)
-{
-	srand(time(NULL));
-	int min = 1;
-	int x = rand() % (max - min + 1) + min;
-	return x;
-}
-string InttoStringp(int n)
-{
-	char tmp[256];
-	string str;
-	sprintf_s(tmp, "littleLight[%d].position", n);
-	str = tmp;
-	//cout << str << endl;
-	return str;
-}
-string InttoStringc(int n)
-{
-	char tmp[256];
-	string str;
-	sprintf_s(tmp, "littleLight[%d].color", n);
-	str = tmp;
-	//cout << str << endl;
-	return str;
-}
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -535,7 +498,7 @@ void matrix(string obj) {
 	myShader.setInt("myTextureSampler0", 0);
 	
 	//Light Effect
-	// default light
+	// Special light
 	glm::mat4 rotationMat = glm::rotate(glm::mat4(),  0.00015f , glm::vec3(0, isRotate, 0));
 	if (isRotate == 1) lightPosition = glm::vec3(rotationMat * glm::vec4(lightPosition, 1));
 	myShader.setVec3("specialLight.lightPosition", lightPosition);

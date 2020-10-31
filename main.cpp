@@ -23,7 +23,7 @@ const int SCR_WIDTH = 800;
 const int SCR_HEIGHT = 600;
 Shader myShader;
 int isRotate = 1;
-int lightbrightness = 3;
+int lightBrightness = 3;
 
 
 // Viewport Controller Properties
@@ -53,7 +53,7 @@ float penguinRotate = 0;
 float penguinDelta = 0.1f;
 float penguinSwim = 0;
 
-glm::vec3 lightPosition = glm::vec3(8, 3, 0);
+glm::vec3 specialLightPosition = glm::vec3(8, 3, 0);
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -118,21 +118,23 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	}
 	if (key == GLFW_KEY_L && action == GLFW_PRESS)
 	{
-		lightbrightness += 1;
-		if (lightbrightness > 10)lightbrightness = 10;
+		lightBrightness += 1;
+		if (lightBrightness > 10)
+			lightBrightness = 10;
 	}
 	if (key == GLFW_KEY_K && action == GLFW_PRESS)
 	{
-		lightbrightness -= 1;
-		if (lightbrightness < 0)lightbrightness = 0;
+		lightBrightness -= 1;
+		if (lightBrightness < 0)
+			lightBrightness = 0;
 	}
 	if (key == GLFW_KEY_C && action == GLFW_PRESS)
 	{
-		lightbrightness = -10;
+		lightBrightness = -10;
 	}
 	if (key == GLFW_KEY_V && action == GLFW_PRESS)
 	{
-		lightbrightness = 3;
+		lightBrightness = 3;
 	}
 	if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
 		penguinPosY += 0.1f * cos(penguinDelta * penguinRotate);
@@ -499,25 +501,26 @@ void shaderFor(string obj) {
 	
 	//Light Effect
 	// Special light
-	glm::vec4 ambientLight(0.1f * lightbrightness, 0.5f * lightbrightness, 0.1f *lightbrightness, 1.0f);
-	myShader.setVec4("specialLight.ambiant", ambientLight);
+	glm::vec4 specialAmbientLight(0.1f * lightBrightness, 0.5f * lightBrightness, 0.1f *lightBrightness, 1.0f);
+	myShader.setVec4("specialLight.ambiant", specialAmbientLight);
 
 	glm::mat4 rotationMat = glm::rotate(glm::mat4(),  0.00015f , glm::vec3(0, isRotate, 0));
-	if (isRotate == 1) lightPosition = glm::vec3(rotationMat * glm::vec4(lightPosition, 1));
-	myShader.setVec3("specialLight.lightPosition", lightPosition);
+	if (isRotate == 1) 
+		specialLightPosition = glm::vec3(rotationMat * glm::vec4(specialLightPosition, 1));
+	myShader.setVec3("specialLight.lightPosition", specialLightPosition);
 
-	glm::vec3 eyePosition(camX, camY, camZ);
-	myShader.setVec3("specialLight.eyePosition", eyePosition);
+	glm::vec3 specialEyePosition(camX, camY, camZ);
+	myShader.setVec3("specialLight.eyePosition", specialEyePosition);
 	
 	//direactional light
-	glm::vec4 ambientLight0(0.1f * lightbrightness, 0.1f * lightbrightness, 0.1f * lightbrightness, 1.0f);
-	myShader.setVec4("directionalLight.ambient", ambientLight0);
+	glm::vec4 dirAmbientLight(0.1f * lightBrightness, 0.1f * lightBrightness, 0.1f * lightBrightness, 1.0f);
+	myShader.setVec4("directionalLight.ambient", dirAmbientLight);
 
-	glm::vec3 lightPosition0 = glm::vec3(dolphinPosX, 5.0f, dolphinPosY);
-	myShader.setVec3("directionalLight.lightPosition", lightPosition0);
+	glm::vec3 dirLghtPosition = glm::vec3(dolphinPosX, 5.0f, dolphinPosY);
+	myShader.setVec3("directionalLight.lightPosition", dirLghtPosition);
 
-	glm::vec3 eyePosition0(camX, camY, camZ);
-	myShader.setVec3("directionalLight.eyePosition", eyePosition0);
+	glm::vec3 dirEyePosition(camX, camY, camZ);
+	myShader.setVec3("directionalLight.eyePosition", specialEyePosition);
 
 }
 void paintGL(void)

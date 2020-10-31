@@ -14,7 +14,7 @@
 #include <time.h>
 
 using namespace std;
-clock_t now_t;
+clock_t timeNow;
 int st_time = 0;
 
 

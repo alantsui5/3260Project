@@ -53,7 +53,7 @@ float penguinRotate = 0;
 float penguinDelta = 0.1f;
 float penguinSwim = 0;
 
-glm::vec3 specialLightPosition = glm::vec3(8, 3, 0);
+glm::vec3 moonLightPosition = glm::vec3(8, 3, 0);
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -463,20 +463,19 @@ void shaderFor(string obj) {
 	glm::mat4 modelTransformMatrix = glm::mat4(1.0f);
 	glm::mat4 modelRotationMatrix = glm::mat4(1.0f);
 	glm::mat4 modelScalingMatrix = glm::mat4(1.0f);
-	unsigned int slot = 0;
 
 	if (obj == "dolphin") {
-		modelTransformMatrix = glm::translate(glm::mat4(), glm::vec3(dolphinPosX, -1.0f, dolphinPosY));
-		modelScalingMatrix = glm::scale(glm::mat4(), glm::vec3(0.05f, 0.05f, 0.05f));
-		modelRotationMatrix = glm::rotate(glm::mat4(), -14.0f, glm::vec3(1, 0, 0));
-		modelRotationMatrix *= glm::rotate(glm::mat4(), dolphinRotate*dolphinDelta, glm::vec3(1, 0, 0));
+		modelTransformMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(dolphinPosX, -1.0f, dolphinPosY));
+		modelScalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.05f, 0.05f, 0.05f));
+		modelRotationMatrix = glm::rotate(glm::mat4(1.0), -14.0f, glm::vec3(1, 0, 0));
+		modelRotationMatrix *= glm::rotate(glm::mat4(1.0), dolphinRotate*dolphinDelta, glm::vec3(1, 0, 0));
 	}
 	else if (obj == "penguin") {
-		modelTransformMatrix = glm::translate(glm::mat4(), glm::vec3(penguinPosX, -1.0f, penguinPosY));
-		modelScalingMatrix = glm::scale(glm::mat4(), glm::vec3(3.05f, 3.05f, 3.05f));
+		modelTransformMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(penguinPosX, -1.0f, penguinPosY));
+		modelScalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(3.05f, 3.05f, 3.05f));
 		if (penguinSwim == 1)
-			modelRotationMatrix = glm::rotate(glm::mat4(), -14.0f, glm::vec3(1, 0, 0));
-		modelRotationMatrix *= glm::rotate(glm::mat4(), penguinRotate * penguinDelta, glm::vec3(0, 0, 1));
+			modelRotationMatrix = glm::rotate(glm::mat4(1.0f), -14.0f, glm::vec3(1, 0, 0));
+		modelRotationMatrix *= glm::rotate(glm::mat4(1.0f), penguinRotate * penguinDelta, glm::vec3(0, 0, 1));
 	}
 	
 	myShader.setMat4("modelTransformMatrix", modelTransformMatrix);
@@ -493,24 +492,24 @@ void shaderFor(string obj) {
 		glm::vec3(0.0f, 5.0f, -5.0f), //look
 		glm::vec3(0, 1, 0) 
 	);
-	glm::mat4 Tmp = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.5f, -5.0f));
+	glm::mat4 Tmp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.5f, -5.0f));
 	glm::mat4 ProjectionMatrix = Projection * Lookat * Tmp;
 	myShader.setMat4("projectionMatrix", ProjectionMatrix);
 
 	myShader.setInt("myTextureSampler0", 0);
 	
 	//Light Effect
-	// Special light
-	glm::vec4 specialAmbientLight(0.1f * lightBrightness, 0.5f * lightBrightness, 0.1f *lightBrightness, 1.0f);
-	myShader.setVec4("specialLight.ambiant", specialAmbientLight);
+	// Moon light
+	glm::vec4 moonAmbientLight(0.1f * lightBrightness, 0.1f * lightBrightness, 0.1f *lightBrightness, 1.0f);
+	myShader.setVec4("moonLight.ambiant", moonAmbientLight);
 
-	glm::mat4 rotationMat = glm::rotate(glm::mat4(),  0.00015f , glm::vec3(0, isRotate, 0));
+	glm::mat4 rotationMat = glm::rotate(glm::mat4(1.0f),  0.00010f , glm::vec3(0, isRotate, 0));
 	if (isRotate == 1) 
-		specialLightPosition = glm::vec3(rotationMat * glm::vec4(specialLightPosition, 1));
-	myShader.setVec3("specialLight.lightPosition", specialLightPosition);
+		moonLightPosition = glm::vec3(rotationMat * glm::vec4(moonLightPosition, 1));
+	myShader.setVec3("moonLight.lightPosition", moonLightPosition);
 
-	glm::vec3 specialEyePosition(camX, camY, camZ);
-	myShader.setVec3("specialLight.eyePosition", specialEyePosition);
+	glm::vec3 moonEyePosition(camX, camY+20, camZ);
+	myShader.setVec3("moonLight.eyePosition", moonEyePosition);
 	
 	//direactional light
 	glm::vec4 dirAmbientLight(0.1f * lightBrightness, 0.1f * lightBrightness, 0.1f * lightBrightness, 1.0f);
@@ -520,7 +519,7 @@ void shaderFor(string obj) {
 	myShader.setVec3("directionalLight.lightPosition", dirLghtPosition);
 
 	glm::vec3 dirEyePosition(camX, camY, camZ);
-	myShader.setVec3("directionalLight.eyePosition", specialEyePosition);
+	myShader.setVec3("directionalLight.eyePosition", moonEyePosition);
 
 }
 void paintGL(void)

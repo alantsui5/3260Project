@@ -1,7 +1,8 @@
 CSCI3260 Assignment 2 Texture Mapping/ Lighting Control  
 
-Name: 
-Student ID:
+Name: Tsui Ho Ming
+Student ID: 1155110323
+
 
 Manipulation:
 	// For example:

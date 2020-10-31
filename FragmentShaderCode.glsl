@@ -6,15 +6,13 @@ in vec3 vertexPositionWorld;
 
 uniform sampler2D myTextureSampler0;
 
-// Special Light
-uniform vec4 ambientLight;
-
-struct SpecialLight{
+// Moon Light
+struct MoonLight{
 	vec4 ambient;
 	vec3 lightPosition;
 	vec3 eyePosition;
 };
-uniform SpecialLight specialLight;
+uniform MoonLight moonLight;
 
 //Directional Light
 struct DirectionalLight{
@@ -34,13 +32,13 @@ void main()
 	vec4 MaterialDiffuseColor = texture( myTextureSampler0, UV ).rgba;
 
 	//Diffuse
-	vec3 lightVectorWorld = normalize(specialLight.lightPosition - vertexPositionWorld);
+	vec3 lightVectorWorld = normalize(moonLight.lightPosition - vertexPositionWorld);
 	float brightness = dot(lightVectorWorld, normalize(normalWorld));
 	vec4 diffuseLight = vec4(brightness, brightness, brightness, 1);
 
 	//Specular
 	vec3 reflectedLightVectorWorld = reflect(-lightVectorWorld, normalWorld);
-	vec3 eyeVectorWorld = normalize(specialLight.eyePosition - vertexPositionWorld);
+	vec3 eyeVectorWorld = normalize(moonLight.eyePosition - vertexPositionWorld);
 	float s =clamp(dot(reflectedLightVectorWorld, eyeVectorWorld), 0, 1);
 	s = pow(s, 50);
 	vec4 specularLight = vec4(s , s, s, 1);
@@ -59,9 +57,9 @@ void main()
 	vec4 specularLight0 = vec4(s1 , s1, s1, 1);
 
 	 color = 
-		MaterialAmbientColor * specialLight.ambient +
+		MaterialAmbientColor * moonLight.ambient +
 		MaterialDiffuseColor * clamp(diffuseLight, 0, 1) * 1.5f+
-		specularLight +
+		specularLight * 0.8f +
 		MaterialAmbientColor * 0.2f +
 		MaterialAmbientColor * directionalLight.ambient + 
 		MaterialDiffuseColor * clamp(diffuseLight0, 0, 1) * 0.5f+

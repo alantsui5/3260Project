@@ -499,6 +499,9 @@ void matrix(string obj) {
 	
 	//Light Effect
 	// Special light
+	glm::vec4 ambientLight(0.1f * lightbrightness, 0.5f * lightbrightness, 0.1f *lightbrightness, 1.0f);
+	myShader.setVec4("specialLight.ambiant", ambientLight);
+
 	glm::mat4 rotationMat = glm::rotate(glm::mat4(),  0.00015f , glm::vec3(0, isRotate, 0));
 	if (isRotate == 1) lightPosition = glm::vec3(rotationMat * glm::vec4(lightPosition, 1));
 	myShader.setVec3("specialLight.lightPosition", lightPosition);

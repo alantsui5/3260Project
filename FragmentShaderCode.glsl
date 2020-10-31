@@ -10,6 +10,7 @@ uniform sampler2D myTextureSampler0;
 uniform vec4 ambientLight;
 
 struct SpecialLight{
+	vec4 ambient;
 	vec3 lightPosition;
 	vec3 eyePosition;
 };
@@ -58,6 +59,7 @@ void main()
 	vec4 specularLight0 = vec4(s1 , s1, s1, 1);
 
 	 color = 
+		MaterialAmbientColor * specialLight.ambient +
 		MaterialDiffuseColor * clamp(diffuseLight, 0, 1) * 1.5f+
 		specularLight +
 		MaterialAmbientColor * 0.2f +

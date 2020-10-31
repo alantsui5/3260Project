@@ -457,7 +457,7 @@ void sendDataToOpenGL()
 	);
 }
 
-void matrix(string obj) {
+void shaderFor(string obj) {
 	glm::mat4 modelTransformMatrix = glm::mat4(1.0f);
 	glm::mat4 modelRotationMatrix = glm::mat4(1.0f);
 	glm::mat4 modelScalingMatrix = glm::mat4(1.0f);
@@ -530,7 +530,7 @@ void paintGL(void)
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	
-	matrix("sea");
+	shaderFor("sea");
 	glBindVertexArray(seaVAO);
 	if (seaColor == 0)
 		seaTexture0.bind(0);
@@ -538,7 +538,7 @@ void paintGL(void)
 		seaTexture1.bind(0);
 	glDrawElements(GL_TRIANGLES, seaObj.indices.size(), GL_UNSIGNED_INT, 0);
 	
-	matrix("dolphin");
+	shaderFor("dolphin");
 	glBindVertexArray(dolphinVAO);
 	if (dolphinColor == 0)
 		dolphinTexture0.bind(0);
@@ -546,7 +546,7 @@ void paintGL(void)
 		dolphinTexture1.bind(0);
 	glDrawElements(GL_TRIANGLES, dolphinObj.indices.size(), GL_UNSIGNED_INT, 0);
 	
-	matrix("penguin");
+	shaderFor("penguin");
 	glBindVertexArray(penguinVAO);
 	penguinTexture0.bind(0);
 	glDrawElements(GL_TRIANGLES, penguinObj.indices.size(), GL_UNSIGNED_INT, 0);

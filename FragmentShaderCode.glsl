@@ -58,8 +58,8 @@ void main()
 
 	 color = 
 		MaterialAmbientColor * moonLight.ambient +
-		MaterialDiffuseColor * clamp(diffuseLight, 0, 1) * 1.5f+
-		specularLight * 0.8f +
+		MaterialDiffuseColor * clamp(diffuseLight, 0, 1) * 0.5f+
+		specularLight * MaterialAmbientColor * 4.8f+
 		MaterialAmbientColor * 0.2f +
 		MaterialAmbientColor * directionalLight.ambient + 
 		MaterialDiffuseColor * clamp(diffuseLight0, 0, 1) * 0.5f+

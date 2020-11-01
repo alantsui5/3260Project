@@ -500,7 +500,7 @@ void shaderFor(string obj) {
 	
 	//Light Effect
 	// Moon light
-	glm::vec4 moonAmbientLight(0.1f * lightBrightness, 0.1f * lightBrightness, 0.1f *lightBrightness, 1.0f);
+	glm::vec4 moonAmbientLight(2.0f * lightBrightness, 1.0f * lightBrightness, 1.0f *lightBrightness, 1.0f);
 	myShader.setVec4("moonLight.ambiant", moonAmbientLight);
 
 	glm::mat4 rotationMat = glm::rotate(glm::mat4(1.0f),  0.00010f , glm::vec3(0, isRotate, 0));
@@ -512,7 +512,7 @@ void shaderFor(string obj) {
 	myShader.setVec3("moonLight.eyePosition", moonEyePosition);
 	
 	//direactional light
-	glm::vec4 dirAmbientLight(0.1f * lightBrightness, 0.1f * lightBrightness, 0.1f * lightBrightness, 1.0f);
+	glm::vec4 dirAmbientLight(0.2f * lightBrightness, 0.2f * lightBrightness, 0.2f * lightBrightness, 0.2f);
 	myShader.setVec4("directionalLight.ambient", dirAmbientLight);
 
 	glm::vec3 dirLghtPosition = glm::vec3(dolphinPosX, 5.0f, dolphinPosY);

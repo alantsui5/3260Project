@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShaderCode.glsl" />
+    <None Include="README.md" />
     <None Include="VertexShaderCode.glsl" />
   </ItemGroup>
   <ItemGroup>

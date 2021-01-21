@@ -1,10 +1,5 @@
 # CSCI3260 Assignment 2 Texture Mapping/ Lighting Control  
 
-## Student Detail
-* Name: Tsui Ho Ming
-* Student ID: 1155110323
-
-
 ## Manipulation:
 ### Mouse:
 * When the left button clicked and the mouse moves up, the whole scene you see moves down.
@@ -18,10 +13,10 @@
 * key "2": switch the texture for the dolphin (dolphin_02.jpg)
 * key "3": switch the texture for the sea (sea_01.jpg)
 * key "4": switch the texture for the sea (sea_02.jpg)
-* key "ก๔": indicate forward movement of the penguin
-* key "ก๕": indicate backward movement of the penguin
-* key "ก๖": indicate left rotation of the penguin
-* key "ก๗": indicate right rotation of the penguin
+* key "ยกรด": indicate forward movement of the penguin
+* key "ยกรต": indicate backward movement of the penguin
+* key "ยกรถ": indicate left rotation of the penguin
+* key "ยกรท": indicate right rotation of the penguin
 * key "z": penguin change gesture to swimming Backstroke, if penguin is already in backstroke, change gesture to stand
 * longpress key "n": dolphin performing Forward somersault
 
